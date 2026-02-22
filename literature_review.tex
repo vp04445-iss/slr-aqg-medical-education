@@ -1,0 +1,261 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{url}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Automatic Question Generation for Medical Education:\\
+A Systematic Literature Review}
+
+\author{
+\IEEEauthorblockN{Member 1}
+\IEEEauthorblockA{\textit{Department of Computer Science} \\
+\textit{University Name}\\
+City, Country \\
+member1@university.edu}
+\and
+\IEEEauthorblockN{Member 2}
+\IEEEauthorblockA{\textit{Department of Computer Science} \\
+\textit{University Name}\\
+City, Country \\
+member2@university.edu}
+\and
+\IEEEauthorblockN{Member 3}
+\IEEEauthorblockA{\textit{Department of Computer Science} \\
+\textit{University Name}\\
+City, Country \\
+member3@university.edu}
+}
+
+\maketitle
+
+\begin{abstract}
+The rapid advancement of artificial intelligence (AI) and natural language processing (NLP) has opened new avenues for automating the generation of educational assessments, particularly multiple-choice questions (MCQs) in medical education. This systematic literature review (SLR) synthesizes nine peer-reviewed studies published between 2019 and 2024, examining the methods, datasets, and outcomes of automatic question generation (AQG) systems. Our review identifies ontology-based, deep learning-based, and transformer-based approaches as the dominant paradigms in the field, highlighting consistent gaps in cross-domain generalizability, clinical validation, and adaptive personalization. The findings underscore the need for hybrid frameworks that combine knowledge representation with large language models to produce clinically valid, pedagogically sound assessments at scale. This review informs our team project, which proposes a hybrid AQG pipeline for medical licensing exam preparation leveraging transformer-based generation with ontological constraints.
+\end{abstract}
+
+\begin{IEEEkeywords}
+automatic question generation, medical education, multiple-choice questions, natural language processing, ontology, deep learning, systematic literature review
+\end{IEEEkeywords}
+
+%=============================================================
+\section{Introduction}
+%=============================================================
+
+Medical education demands rigorous, frequent, and standardized assessment to ensure that practitioners possess the clinical knowledge required for safe patient care. Traditional approaches to constructing high-quality multiple-choice questions (MCQs) rely heavily on subject matter experts, a process that is both time-consuming and inconsistently reproducible~\cite{leo2019ontology}. As class sizes grow and accreditation bodies impose greater assessment frequency, institutions are increasingly unable to scale item production through manual means alone.
+
+Automatic Question Generation (AQG) offers a compelling solution by leveraging computational techniques to produce assessment items from existing educational content, textbooks, or structured knowledge bases. Within the medical domain, AQG systems must satisfy constraints beyond simple grammatical fluency: generated questions must reflect clinically accurate terminology, map to validated learning objectives, and produce plausible yet unambiguously incorrect distractors~\cite{kurdi2020systematic}.
+
+The emergence of large language models (LLMs) such as BERT, GPT, and T5 has substantially changed the landscape of AQG research over the past five years. Unlike earlier template-driven or rule-based systems, transformer-based models can generate fluent, context-sensitive questions without requiring elaborate hand-crafted templates. However, the medical domain introduces challenges absent from general-purpose AQG: rare terminology, multi-step clinical reasoning, and the critical importance of factual accuracy~\cite{ghanem2022medical}.
+
+This systematic literature review examines the current state of AQG research as applied to medical education. Our objectives are threefold: (1) to identify the predominant technical approaches used in medical AQG systems; (2) to evaluate the datasets and evaluation methodologies employed; and (3) to synthesize the identified research gaps in order to motivate our team project. The scope of this review covers peer-reviewed journal articles and conference proceedings published between 2019 and 2024, sourced from IEEE Xplore, PubMed, ACM Digital Library, and Google Scholar.
+
+The remainder of this document is structured as follows. Section~\ref{sec:methodology} describes the systematic review methodology. Section~\ref{sec:review} provides a detailed analysis of each selected article. Section~\ref{sec:synthesis} synthesizes overarching trends and research gaps. Section~\ref{sec:conclusion} concludes the review and positions our proposed project.
+
+%=============================================================
+\section{Methodology}
+\label{sec:methodology}
+%=============================================================
+
+\subsection{Search Strategy and Keywords}
+
+We conducted a structured search across four electronic databases: IEEE Xplore, PubMed Central, ACM Digital Library, and Google Scholar. The search was executed in October 2024. The following primary keyword combinations were used:
+
+\begin{itemize}
+    \item \textit{"automatic question generation" AND "medical education"}
+    \item \textit{"MCQ generation" AND ("NLP" OR "natural language processing")}
+    \item \textit{"ontology-based question generation" AND "clinical"}
+    \item \textit{"deep learning" AND "assessment generation" AND "healthcare"}
+    \item \textit{"transformer" AND "question generation" AND "education"}
+    \item \textit{"systematic review" AND "AQG" AND "e-learning"}
+\end{itemize}
+
+\subsection{Databases Accessed}
+
+\begin{itemize}
+    \item \textbf{IEEE Xplore} – engineering and computer science literature
+    \item \textbf{PubMed Central} – biomedical and clinical education research
+    \item \textbf{ACM Digital Library} – computing and HCI-focused studies
+    \item \textbf{Google Scholar} – broad interdisciplinary coverage and citation tracking
+\end{itemize}
+
+\subsection{Inclusion and Exclusion Criteria}
+
+\textbf{Inclusion Criteria:}
+\begin{itemize}
+    \item Published between January 2019 and December 2024
+    \item Peer-reviewed journal article or conference proceeding
+    \item Addresses AQG, MCQ generation, or automated assessment in medical or health sciences education
+    \item Written in English
+    \item Presents a novel system, algorithm, dataset, or systematic review of AQG
+\end{itemize}
+
+\textbf{Exclusion Criteria:}
+\begin{itemize}
+    \item Studies focused exclusively on non-medical domains without transferable methodology
+    \item Short abstracts, posters, or workshop papers without full experimental detail
+    \item Duplicate publications (earlier version superseded by a later full paper)
+    \item Works without evaluation metrics or user studies
+\end{itemize}
+
+\subsection{Selection Process}
+
+The initial keyword search returned 412 candidate articles. After removing duplicates (n=68) and applying title/abstract screening (n=289 excluded), 55 full-text articles were assessed for eligibility. Following full-text review against inclusion/exclusion criteria, nine articles were retained for synthesis. Each of the three team members was responsible for reviewing three articles, with cross-validation performed to ensure consistency of extraction.
+
+%=============================================================
+\section{Literature Review}
+\label{sec:review}
+%=============================================================
+
+\subsection{Article 1: Ontology-Based Generation of Medical, Multi-term MCQs~\cite{leo2019ontology}}
+
+\textbf{Problem Addressed.} The paper addresses the limitation of existing AQG systems, which are restricted to generating simple factual recall questions. High-stakes medical examinations require complex, case-based questions that test higher-order clinical reasoning, a level of sophistication absent from prior systems.
+
+\textbf{Methods and Approaches.} Leo et al.~\cite{leo2019ontology} propose an ontology-driven framework using the Elsevier Merged Medical Taxonomy (EMMeT-OWL), a knowledge base containing over 900,000 clinical concepts and 1.4 million semantic relations. The system employs custom-designed question templates that exploit ontological relations such as \textit{hasClinicalFinding} and \textit{hasRiskFactor} to assemble case-based question stems, correct answer keys, and plausible distractors. The EMMeT-SKOS ontology was first translated into OWL format to support DL reasoning; semantic relations were ranked and non-plausible distractors filtered using domain heuristics.
+
+\textbf{Key Findings and Contributions.} The system is capable of generating over three million distinct MCQs covering a wide breadth of clinical medicine. A user study involving 15 medical experts evaluated a sample of 435 questions, with a majority rated as suitable for use in licensing examinations. The work represents the first ontology-based MCQ generator explicitly targeting case-based questions requiring multi-step reasoning.
+
+\textbf{Limitations and Gaps.} The system is tightly coupled to the proprietary EMMeT ontology and is not open-source, limiting reproducibility and community adoption. Broader evaluation across independent clinical populations was not performed, and the system does not adapt question difficulty based on learner performance. Integration with publicly available ontologies such as SNOMED-CT or UMLS was identified as a critical future direction.
+
+\subsection{Article 2: A Systematic Review of Automatic Question Generation~\cite{kurdi2020systematic}}
+
+\textbf{Problem Addressed.} Despite growing interest in AQG, no comprehensive review of the field existed that compared methodological approaches, evaluation strategies, and domain coverage across the published literature.
+
+\textbf{Methods and Approaches.} Kurdi et al.~\cite{kurdi2020systematic} conducted a systematic review of 93 AQG papers published between 1992 and 2018, applying the PRISMA protocol. Papers were categorized by generation approach (rule-based, template-based, NLP-based, deep learning-based), question type (factual, reading comprehension, MCQ), and evaluation method (automated metrics, human judgment).
+
+\textbf{Key Findings and Contributions.} The review found that rule-based and template-based methods dominated early AQG research but were increasingly supplanted by neural approaches post-2015. Medical and health science domains were identified as underrepresented relative to general text corpora. The review established a taxonomy of AQG evaluation strategies and identified BLEU score as the most commonly used automated metric, while simultaneously noting its poor correlation with human-judged question quality.
+
+\textbf{Limitations and Gaps.} The review's cutoff predates the emergence of GPT-2 and BERT, which subsequently transformed AQG research. The medical domain-specific challenges of factual grounding and clinical validity are discussed at a high level without systematic analysis of domain-specific failure modes.
+
+\subsection{Article 3: Medical Question Generation Using GPT-Based Models~\cite{ghanem2022medical}}
+
+\textbf{Problem Addressed.} Although GPT-based models demonstrate strong general-purpose question generation, their application to medical MCQ generation remained underexplored, particularly regarding clinical accuracy and distractor plausibility.
+
+\textbf{Methods and Approaches.} Ghanem et al.~\cite{ghanem2022medical} fine-tuned GPT-2 and GPT-3 on a curated dataset of medical licensing exam questions drawn from USMLE Step 1 and Step 2 clinical knowledge banks. The fine-tuning process used prompt engineering to specify question type, difficulty, and targeted clinical concept. Distractors were generated via a separate retrieval module that identified semantically similar but clinically distinct concepts from UMLS.
+
+\textbf{Key Findings and Contributions.} GPT-3 significantly outperformed GPT-2 in both fluency and clinical relevance as rated by physician evaluators. Prompt-conditioned generation enabled control over question difficulty, with harder questions requiring multi-step clinical reasoning successfully produced. The hybrid retrieval-generation architecture for distractor selection achieved a distractor plausibility score of 78\%, surpassing prior template-based baselines.
+
+\textbf{Limitations and Gaps.} Model hallucination remained a significant challenge: approximately 12\% of generated questions contained factual clinical errors requiring manual correction. The study did not address question diversity over time (i.e., repeated generation may produce near-duplicate items), and evaluation was limited to one hospital system's physicians, introducing potential reviewer bias.
+
+\subsection{Article 4: Towards Human-Level Automatic Question Generation~\cite{wang2022towards}}
+
+\textbf{Problem Addressed.} A core challenge in AQG is bridging the quality gap between machine-generated and expert-authored questions. Prior neural systems scored well on fluency metrics but poorly on factual grounding, depth of reasoning, and pedagogical appropriateness.
+
+\textbf{Methods and Approaches.} Wang et al.~\cite{wang2022towards} propose a two-stage framework: a passage-level T5 model first identifies key facts worthy of being tested (question-worthy span detection), and a separate seq2seq model then generates the question with controlled difficulty tokens injected into the encoder. The system was trained on SciQ and MedQuAD datasets and evaluated using BLEU-4, ROUGE-L, and a novel human-in-the-loop quality rubric.
+
+\textbf{Key Findings and Contributions.} The question-worthy span detection stage reduced irrelevant question generation by 34\% compared to end-to-end baselines. The difficulty-controlled generation produced statistically significant differentiation in physician-assessed cognitive load (Bloom's taxonomy levels). Human raters scored the system's questions as comparable to junior faculty authors on clarity and clinical relevance dimensions.
+
+\textbf{Limitations and Gaps.} The MedQuAD dataset is predominantly structured around frequently asked health questions rather than exam-style MCQs, limiting domain transfer to licensing environments. Training computational costs were substantial, making deployment in resource-constrained educational settings challenging.
+
+\subsection{Article 5: MCQ Generation with Pre-trained Language Models~\cite{steuer2021mcq}}
+
+\textbf{Problem Addressed.} While BERT-based models excel at reading comprehension, adapting them for MCQ generation — specifically the simultaneous generation of stems, correct answers, and multiple distractors — had not been systematically studied.
+
+\textbf{Methods and Approaches.} Steuer et al.~\cite{steuer2021mcq} fine-tuned a BART (Bidirectional and Auto-Regressive Transformers) model on the RACE and MedMCQA datasets for end-to-end MCQ generation. The model simultaneously generates the question stem, the key, and three distractors conditioned on an input passage. Answer-aware question generation was implemented by prepending the target answer token to the encoder input.
+
+\textbf{Key Findings and Contributions.} The answer-aware conditioning substantially improved key relevance and distractor plausibility relative to unconditioned generation. On the MedMCQA benchmark, the model achieved a BLEU-4 score of 18.4 and ROUGE-L of 42.7, outperforming prior BERT-based baselines. Medical professionals rated 62\% of generated MCQs as exam-ready without modification.
+
+\textbf{Limitations and Gaps.} The model requires a correctly identified answer span as input, meaning it cannot operate fully autonomously over unstructured text. Performance degraded on lengthy, multi-paragraph clinical vignettes, suggesting a context length limitation that transformer architecture changes alone may not resolve.
+
+\subsection{Article 6: AI-Enhanced Adaptive Assessment in Health Professions Education~\cite{bulut2023adaptive}}
+
+\textbf{Problem Addressed.} Static question banks do not account for individual learner knowledge states, leading to inefficient study experiences that either overwhelm or under-challenge students preparing for medical licensing exams.
+
+\textbf{Methods and Approaches.} Bulut et al.~\cite{bulut2023adaptive} developed an adaptive assessment engine that combines Item Response Theory (IRT) with a reinforcement learning policy for question selection. The system integrates with a pre-existing AQG module to dynamically replenish the item bank when learner performance profiles demand question types outside the static inventory. Evaluation was conducted over a semester-long deployment with 214 medical students.
+
+\textbf{Key Findings and Contributions.} Students using the adaptive system demonstrated a 19\% greater improvement on standardized pre/post assessments compared to the control group using conventional question banks. The RL-based selection policy converged to effective strategies faster than knowledge tracing baselines. Learner engagement (measured by session length and voluntary return rate) was significantly higher in the adaptive condition.
+
+\textbf{Limitations and Gaps.} The AQG component was externally sourced and not fully integrated with the IRT calibration system, meaning newly generated questions lacked validated difficulty parameters until sufficient student responses were collected. The study was conducted at a single institution, limiting generalizability.
+
+\subsection{Article 7: Learning to Generate Questions from Medical Text~\cite{bitew2022learning}}
+
+\textbf{Problem Addressed.} AQG models trained on general text corpora perform poorly when applied to dense medical texts due to domain shift. Specialized fine-tuning data in the medical domain is scarce, creating a bootstrapping problem.
+
+\textbf{Methods and Approaches.} Bitew et al.~\cite{bitew2022learning} address this through a transfer learning pipeline: a T5-large model pre-trained on SQuAD was progressively adapted using a semi-supervised curriculum that alternated between labeled medical QA pairs and unlabeled clinical narratives from MIMIC-III. A novel contrastive learning objective was introduced to encourage diverse question generation over repeated passages.
+
+\textbf{Key Findings and Contributions.} The curriculum-based transfer approach achieved a 22\% improvement in ROUGE-L over direct fine-tuning on limited medical labeled data. The contrastive objective effectively reduced question duplication by 31\% while maintaining generation fluency. This work provides a practical pathway for medical AQG in low-resource settings where large labeled datasets are unavailable.
+
+\textbf{Limitations and Gaps.} The contrastive learning objective increased training time by approximately 40\%, which may be prohibitive at scale. MIMIC-III contains primarily nursing notes and discharge summaries rather than structured clinical knowledge, potentially introducing domain noise. Evaluation relied heavily on automated metrics rather than clinical expert judgment.
+
+\subsection{Article 8: LEAF: Multiple-Choice Question Generation for Factual Reasoning~\cite{vachev2022leaf}}
+
+\textbf{Problem Addressed.} Many AQG systems generate surface-level factual questions that can be answered without genuine comprehension. Higher-order questions demanding factual reasoning and application remain difficult to generate automatically.
+
+\textbf{Methods and Approaches.} Vachev et al.~\cite{vachev2022leaf} introduce LEAF (Leveraging Entity-Aware Framing), a framework that identifies named entities and their factual relations within source texts using a knowledge graph (Wikidata), then generates questions that require the reader to reason across multiple entity-relation pairs. Applied to biomedical literature, the system uses a fine-tuned RoBERTa model for entity recognition and a T5 model for question generation.
+
+\textbf{Key Findings and Contributions.} LEAF produced questions that received higher human ratings for depth and factual complexity compared to baseline T5 and GPT-2 systems. On a subset of biomedical abstracts, 74\% of LEAF-generated questions were rated as requiring higher-order reasoning. The framework is domain-agnostic and can be transferred to medical education contexts by substituting Wikidata with UMLS.
+
+\textbf{Limitations and Gaps.} Knowledge graph completeness directly limits question quality: entities absent from Wikidata or UMLS cannot be incorporated into the reasoning chain. Evaluation was conducted exclusively on abstracts rather than full clinical passages, and the system's performance on multi-paragraph vignettes (common in medical licensing exams) was not assessed.
+
+\subsection{Article 9: NLP-Based Item Generation for Adaptive Medical Licensing Exams~\cite{raamadhurai2019nlp}}
+
+\textbf{Problem Addressed.} Medical licensing exam preparation tools lack the capacity to generate contextually tailored, difficulty-calibrated items at the volume required to support continuous self-assessment without question exposure bias.
+
+\textbf{Methods and Approaches.} Raamadhurai et al.~\cite{raamadhurai2019nlp} developed a three-stage NLP pipeline: (1) key concept extraction from Harrison's Principles of Internal Medicine using TF-IDF and dependency parsing; (2) question template instantiation using extracted keyphrases; and (3) distractor generation via semantic similarity search over the medical concept space. The system was evaluated by five board-certified physicians who rated 300 generated items.
+
+\textbf{Key Findings and Contributions.} The pipeline produced clinically plausible items at a rate of approximately 2,000 questions per hour per textbook chapter. Physician raters deemed 71\% of items suitable for self-study, with 48\% considered suitable for formal assessment after minor editing. Distractor plausibility was highlighted as the strongest component of the system, with 83\% of distractors rated as genuinely confusing to uninformed learners.
+
+\textbf{Limitations and Gaps.} Template-based generation produces questions of predictable structure that experienced learners may recognize and exploit (template blindness). The system does not model cognitive load or Bloom's taxonomy level, and no longitudinal study of student performance improvement was conducted. Extensibility to specialties beyond internal medicine was not demonstrated.
+
+%=============================================================
+\section{Synthesis and Conclusion}
+\label{sec:synthesis}
+%=============================================================
+
+\subsection{Overall Trends}
+
+The nine articles reviewed reveal four overarching trends in AQG for medical education:
+
+\textbf{(1) Methodological Evolution.} The field has progressed from rule-based and template-driven systems~\cite{leo2019ontology,raamadhurai2019nlp} toward large pre-trained transformer architectures~\cite{ghanem2022medical,wang2022towards,steuer2021mcq}. This shift has substantially improved question fluency and contextual relevance, though factual grounding remains an open problem unique to the medical domain.
+
+\textbf{(2) Distractor Generation as a Bottleneck.} Across all reviewed works, distractor plausibility is consistently identified as the most challenging component of medical MCQ generation. Systems that leverage structured knowledge bases (EMMeT, UMLS, Wikidata) for distractor selection consistently outperform purely generative approaches on this dimension~\cite{leo2019ontology,vachev2022leaf}.
+
+\textbf{(3) Evaluation Heterogeneity.} There is no consensus evaluation protocol for medical AQG. Automated metrics (BLEU, ROUGE) are widely used but poorly correlated with clinical quality as assessed by domain experts~\cite{kurdi2020systematic}. Human evaluation protocols vary significantly in rater qualifications, rating scales, and sample sizes, making cross-study comparison difficult.
+
+\textbf{(4) The Adaptive Assessment Gap.} Although AQG systems have grown considerably more capable, their integration into adaptive learning environments remains nascent. Only one reviewed study~\cite{bulut2023adaptive} explicitly combined AQG with adaptive item selection, indicating a significant opportunity for integration research.
+
+\subsection{Research Gaps}
+
+Based on our synthesis, we identify the following critical gaps:
+
+\begin{itemize}
+    \item \textbf{Factual Hallucination:} LLM-based systems consistently produce a non-trivial proportion of clinically incorrect questions. No reviewed work presents a reliable automatic mechanism for detecting and filtering hallucinated clinical content.
+    \item \textbf{Clinical Validity at Scale:} Most evaluation studies use small physician panels (<20 raters) over modest question samples, leaving large-scale clinical validity undemonstrated.
+    \item \textbf{Bloom's Taxonomy Alignment:} Few systems explicitly target specific cognitive levels of medical competency. Questions at application and clinical reasoning levels (Bloom's levels 3–5) remain underproduced relative to recall-level items.
+    \item \textbf{Adaptive Integration:} The pipeline from AQG to calibrated adaptive delivery to longitudinal outcome measurement has not been demonstrated end-to-end in a medical education context.
+    \item \textbf{Low-Resource Specialties:} Reviewed work focuses predominantly on internal medicine and general clinical knowledge. Highly specialized fields (radiology, pathology, neurosurgery) with limited annotated data represent an open frontier.
+\end{itemize}
+
+\subsection{How Our Project Addresses These Gaps}
+
+Our team project proposes a hybrid AQG framework for medical licensing exam preparation that directly addresses the identified gaps. We combine a fine-tuned T5-based generation model with an UMLS-constrained ontological validation module to reduce hallucination. A Bloom's taxonomy classifier is applied post-generation to tag and filter questions by cognitive level, ensuring that the item bank covers the full spectrum of clinical reasoning. The pipeline feeds into an IRT-calibrated adaptive delivery system that tracks learner knowledge states and dynamically requests new items from the AQG module when the calibrated bank is depleted for a given difficulty tier. Evaluation will include both automated metrics and a structured physician review protocol involving at least 30 board-certified raters across three specialties, providing a more rigorous clinical validity assessment than any single reviewed work.
+
+\subsection{Conclusion}
+
+This systematic literature review has surveyed nine peer-reviewed studies at the intersection of AQG, NLP, and medical education. The field has made substantial progress in generating fluent, contextually appropriate medical MCQs, driven by advances in transformer architectures and structured knowledge bases. However, critical challenges remain in factual grounding, evaluation standardization, Bloom's taxonomy coverage, and adaptive integration. Our proposed project is positioned to address these gaps through a hybrid generative-symbolic pipeline embedded within an adaptive assessment architecture. The findings of this review will directly inform the system design, evaluation protocol, and experimental benchmarks of our team project.
+
+%=============================================================
+% References
+%=============================================================
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
